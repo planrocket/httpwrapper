@@ -1,0 +1,17 @@
+// 私有依赖版本 配置文件
+ext {
+    android_private = [
+            minSdkVersion   : 21,
+            targetSdkVersion: 22,
+            versionCode     : 161,
+            versionName     : "v6.3.1",
+            applicationId   : "com.xin.marketingsystem"
+    ]
+
+    depends_private = [
+            'okhttputils'   : 'com.zhy:okhttputils:2.6.2',
+            'logger'        : 'com.orhanobut:logger:1.15',
+            'butterknife'   : 'com.jakewharton:butterknife:8.8.1',
+            'payload_reader': 'com.meituan.android.walle:payload_reader:1.1.4'
+    ]
+}
