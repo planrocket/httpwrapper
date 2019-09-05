@@ -1,6 +1,8 @@
 package com.xin.support.http.impl4okhttp.sender;
 
 
+import android.util.Log;
+
 import com.xin.support.http.api.callback.Callback;
 import com.xin.support.http.api.sender.ISender;
 import com.xin.support.http.impl4okhttp.request.CommonRequest;
@@ -15,12 +17,12 @@ import okhttp3.Response;
 
 public class DefaultOkhttpSender implements ISender {
     private static final int TIME_OUT = 8;
-    private OkHttpClient mClient;
+    private OkHttpClient okHttpClient;
 
 
     @Override
     public void init() {
-        mClient =
+        okHttpClient =
                 new OkHttpClient.Builder()
                         .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                         .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -29,22 +31,39 @@ public class DefaultOkhttpSender implements ISender {
                         .build();
     }
 
+    @Override
+    public void destroy() {
+        okHttpClient = null;
+    }
+
 //    @Override
-//    public Response2 post(final String url, final Map<String, String> params) {
+//    public SimpleResponse post(final String url, final Map<String, String> params) {
 //        return null;
 //    }
 
+    /**
+     * todo: 支持header
+     *
+     * @param url
+     * @param params
+     * @param callback
+     */
     @Override
     public void post(final String url, final Map<String, String> params, final Callback callback) {
-        Call call = mClient.newCall(CommonRequest.createPostRequest(url, params));
+        //包装必要参数
+        Call call = okHttpClient.newCall(CommonRequest.createPostRequest(url, params));
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.e("DemoHttp", "onFailure call:" + call);
+
                 dispatchResultFail(e, callback);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Log.e("DemoHttp", "onResponse call:" + call);
+
                 try {
                     if (call.isCanceled()) {
                         dispatchResultFail(new IOException("Canceled!"), callback);
@@ -56,7 +75,7 @@ public class DefaultOkhttpSender implements ISender {
                         return;
                     }
 
-                    Object o = callback.parseResponse(response);
+                    Object o = callback.parseResponse(response.body().string());
                     dispatchResultSuccess(o, callback);
                 } catch (Exception e) {
                     dispatchResultFail(e, callback);

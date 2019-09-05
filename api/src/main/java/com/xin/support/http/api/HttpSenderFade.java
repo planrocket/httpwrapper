@@ -5,6 +5,7 @@ import android.support.v4.util.ArrayMap;
 
 import com.xin.support.http.api.sender.ISender;
 
+//TODO: 提供reset功能
 public class HttpSenderFade {
     public static final String ROOT_CLIENT = "ROOT";
 

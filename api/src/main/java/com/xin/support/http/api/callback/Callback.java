@@ -3,7 +3,7 @@ package com.xin.support.http.api.callback;
 
 public abstract class Callback<T> {
 
-    public abstract T parseResponse(Object response) throws Exception;
+    public abstract T parseResponse(String response) throws Exception;
 
     /**
      * UI Thread
