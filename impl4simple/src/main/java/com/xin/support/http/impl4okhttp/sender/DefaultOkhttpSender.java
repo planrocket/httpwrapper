@@ -4,8 +4,10 @@ package com.xin.support.http.impl4okhttp.sender;
 import android.util.Log;
 
 import com.xin.support.http.api.callback.Callback;
+import com.xin.support.http.api.response.SimpleResponse;
 import com.xin.support.http.api.sender.ISender;
 import com.xin.support.http.impl4okhttp.request.CommonRequest;
+import com.xin.support.http.impl4okhttp.request.InternalUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -74,8 +76,8 @@ public class DefaultOkhttpSender implements ISender {
                         dispatchResultFail(new IOException("request failed , reponse's code is : " + response.code()), callback);
                         return;
                     }
-
-                    Object o = callback.parseResponse(response.body().string());
+                    SimpleResponse simpleResponse = InternalUtils.generateSimpleResponse(call, response);
+                    Object o = callback.parseResponse(simpleResponse);
                     dispatchResultSuccess(o, callback);
                 } catch (Exception e) {
                     dispatchResultFail(e, callback);
@@ -100,4 +102,5 @@ public class DefaultOkhttpSender implements ISender {
         callback.onResponse(object);
         callback.onEnd();
     }
+
 }

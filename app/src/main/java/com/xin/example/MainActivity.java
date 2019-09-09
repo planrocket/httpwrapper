@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.xin.support.http.api.HttpSenderFade;
 import com.xin.support.http.api.callback.Callback;
+import com.xin.support.http.api.response.SimpleResponse;
 import com.xin.support.http.impl4okhttp.sender.DefaultOkhttpSender;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -87,10 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                     @Override
-                    public String parseResponse(String response) throws Exception {
+                    public String parseResponse(SimpleResponse response) throws Exception {
                         Log.e("DemoHttp", "parseResponse response:" + response);
-                        return response;
-                        ;
+                        return response.bodyString;
                     }
 
                     @Override

@@ -1,9 +1,11 @@
 package com.xin.support.http.api.callback;
 
 
+import com.xin.support.http.api.response.SimpleResponse;
+
 public abstract class Callback<T> {
 
-    public abstract T parseResponse(String response) throws Exception;
+    public abstract T parseResponse(SimpleResponse response) throws Exception;
 
     /**
      * UI Thread

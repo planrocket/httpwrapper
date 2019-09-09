@@ -1,17 +1,28 @@
 package com.xin.support.http.api.response;
 
-import android.support.v4.util.ArrayMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 同步时返回的数据
  */
 public class SimpleResponse {
-    SimpleRequest request;
+
 
     //http状态码
-    int code;
-    String message;
+    public final int code;
+    public final String message;
+    public final String bodyString;
 
-    ArrayMap headers;
+    public final Map<String, List<String>> headers;
+
+    public SimpleResponse(int code, Map<String, List<String>> headers, String message, String bodyString) {
+        this.code = code;
+        this.headers = headers;
+        this.message = message;
+        this.bodyString = bodyString;
+    }
 
 }
+
+

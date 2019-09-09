@@ -2,6 +2,7 @@ package com.xin.support.http.api;
 
 
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 
 import com.xin.support.http.api.sender.ISender;
 
@@ -65,13 +66,13 @@ public class HttpSenderFade {
         try {
             instance = targetClass.newInstance();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            Log.e("HttpSenderFade", "HttpSenderFade -> obtain -> makeClient_IllegalAccessException:" + e.getMessage());
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            Log.e("HttpSenderFade", "HttpSenderFade -> obtain -> makeClient_InstantiationException:" + e.getMessage());
         }
 
         if (instance == null) {
-            throw new RuntimeException("" + instance + "must have public Construtor");
+            throw new RuntimeException("" + instance + "must have public default Construtor");
         }
         return instance;
     }
