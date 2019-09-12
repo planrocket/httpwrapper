@@ -13,7 +13,7 @@ import okhttp3.ResponseBody;
 
 public class InternalUtils {
 
-    public static SimpleResponse generateSimpleResponse(final Call call, final Response response) {
+    public static SimpleResponse convert(final Call call, final Response response) {
         URL url = call.request().url().url();
 
         int code = response.code();

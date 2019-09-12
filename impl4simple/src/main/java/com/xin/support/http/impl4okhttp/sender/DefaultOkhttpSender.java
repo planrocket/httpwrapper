@@ -76,7 +76,7 @@ public class DefaultOkhttpSender implements ISender {
                         dispatchResultFail(new IOException("request failed , reponse's code is : " + response.code()), callback);
                         return;
                     }
-                    SimpleResponse simpleResponse = InternalUtils.generateSimpleResponse(call, response);
+                    SimpleResponse simpleResponse = InternalUtils.convert(call, response);
                     Object o = callback.parseResponse(simpleResponse);
                     dispatchResultSuccess(o, callback);
                 } catch (Exception e) {
