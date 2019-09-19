@@ -11,7 +11,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class InternalUtils {
+public class InternalConvertUtils {
 
     public static SimpleResponse convert(final Call call, final Response response) {
         URL url = call.request().url().url();

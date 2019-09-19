@@ -7,7 +7,7 @@ import com.xin.support.http.api.callback.Callback;
 import com.xin.support.http.api.response.SimpleResponse;
 import com.xin.support.http.api.sender.ISender;
 import com.xin.support.http.impl4okhttp.request.CommonRequest;
-import com.xin.support.http.impl4okhttp.request.InternalUtils;
+import com.xin.support.http.impl4okhttp.request.InternalConvertUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -66,17 +66,19 @@ public class DefaultOkhttpSender implements ISender {
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("DemoHttp", "onResponse call:" + call);
 
-                try {
-                    if (call.isCanceled()) {
-                        dispatchResultFail(new IOException("Canceled!"), callback);
-                        return;
-                    }
+                if (call.isCanceled()) {
+                    dispatchResultFail(new IOException("Canceled!"), callback);
+                    return;
+                }
 
-                    if (!response.isSuccessful()) {
-                        dispatchResultFail(new IOException("request failed , reponse's code is : " + response.code()), callback);
-                        return;
-                    }
-                    SimpleResponse simpleResponse = InternalUtils.convert(call, response);
+                if (!response.isSuccessful()) {
+                    dispatchResultFail(new IOException("request failed , reponse's code is : " + response.code()), callback);
+                    return;
+                }
+
+                try {
+                    SimpleResponse simpleResponse = InternalConvertUtils.convert(call, response);
+                    //TODO：这个parseResponse到底是放到 sender 加一个parseResponse 还是放在callback里面
                     Object o = callback.parseResponse(simpleResponse);
                     dispatchResultSuccess(o, callback);
                 } catch (Exception e) {

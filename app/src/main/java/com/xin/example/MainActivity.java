@@ -6,7 +6,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 
-import com.xin.support.http.api.HttpSenderFade;
+import com.xin.support.http.api.HttpSenderManager;
 import com.xin.support.http.api.callback.Callback;
 import com.xin.support.http.api.response.SimpleResponse;
 import com.xin.support.http.impl4okhttp.sender.DefaultOkhttpSender;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void configHttp() {
-        HttpSenderFade.getInstance().register(HTTP_C2B, DefaultOkhttpSender.class);
+        HttpSenderManager.getInstance().register(HTTP_C2B, DefaultOkhttpSender.class);
     }
 
     public void sendPostByUtils(View view) {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         params.put("username", "hyman");
         params.put("password", "123");
 
-        HttpSenderFade
+        HttpSenderManager
                 .getInstance()
                 .obtain(HTTP_C2B)
                 .post(url, params, new Callback<String>() {
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public String parseResponse(SimpleResponse response) throws Exception {
                         Log.e("DemoHttp", "parseResponse response:" + response);
-                        return response.bodyString;
+                        return response.bodyStr;
                     }
 
                     @Override
